@@ -65,7 +65,7 @@ G.App = React.createClass({
               readOnly
               checked={this.state.hideCompleted}
               onClick={this.toggleHideCompleted} />
-            Hide Completed G.Tasks
+            Hide Completed Tasks
           </label>
 
           <G.AccountsUIWrapper />

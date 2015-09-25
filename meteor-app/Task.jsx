@@ -44,7 +44,7 @@ G.Task = React.createClass({
     return (
       <li className={taskClassName}>
         <button className='delete' onClick={this.deleteThisTask}>
-          &times
+          &times;
         </button>
 
         <input

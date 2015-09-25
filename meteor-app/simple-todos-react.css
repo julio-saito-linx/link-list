@@ -76,6 +76,14 @@ ul {
   font-size: 1em;
   border: none;
   position: relative;
+  cursor: pointer;
+}
+
+button {
+  cursor: pointer;
+}
+input[type="checkbox"] {
+  cursor: pointer;
 }
 
 li {
