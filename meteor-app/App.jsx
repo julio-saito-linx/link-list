@@ -1,5 +1,5 @@
 // App component - represents the whole app
-G.App = React.createClass({
+_g.Components.App = React.createClass({
 
   // This mixin makes the getMeteorData method work
   mixins: [ReactMeteorData],
@@ -10,7 +10,7 @@ G.App = React.createClass({
     }
   },
 
-  // Loads items from the G.Tasks collection and puts them on this.data.tasks
+  // Loads items from the _g.Collections.Tasks collection and puts them on this.data.tasks
   getMeteorData () {
     let query = {}
 
@@ -20,8 +20,8 @@ G.App = React.createClass({
     }
 
     return {
-      tasks: G.Tasks.find(query, { sort: { createdAt: -1 } }).fetch(),
-      incompleteCount: G.Tasks.find({ checked: { $ne: true } }).count(),
+      tasks: _g.Collections.Tasks.find(query, { sort: { createdAt: -1 } }).fetch(),
+      incompleteCount: _g.Collections.Tasks.find({ checked: { $ne: true } }).count(),
       currentUser: Meteor.user()
     }
   },
@@ -31,7 +31,7 @@ G.App = React.createClass({
     return this.data.tasks.map((task) => {
       const currentUserId = this.data.currentUser && this.data.currentUser._id
       const showPrivateButton = task.owner === currentUserId
-      return <G.Task key={task._id} task={task} showPrivateButton={showPrivateButton} />
+      return <_g.Components.Task key={task._id} task={task} showPrivateButton={showPrivateButton} />
     })
   },
 
@@ -68,7 +68,7 @@ G.App = React.createClass({
             Hide Completed Tasks
           </label>
 
-          <G.AccountsUIWrapper />
+          <_g.Components.AccountsUIWrapper />
 
           { this.data.currentUser
             ? <form className='new-task' onSubmit={this.handleSubmit} >

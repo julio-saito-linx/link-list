@@ -1,5 +1,5 @@
 // Define a collection to hold our tasks
-G.Tasks = new Mongo.Collection('tasks')
+_g.Collections.Tasks = new Mongo.Collection('tasks')
 
 if (Meteor.isClient) {
   // This code is executed on the client only
@@ -11,14 +11,14 @@ if (Meteor.isClient) {
 
   Meteor.startup(function () {
     // Use Meteor.startup to render the component after the page is ready
-    React.render(<G.App />, document.getElementById('render-target'))
+    React.render(<_g.Components.App />, document.getElementById('render-target'))
   })
 }
 
 if (Meteor.isServer) {
   // Only publish tasks that are public or belong to the current user
   Meteor.publish('tasks', function () {
-    return G.Tasks.find({
+    return _g.Collections.Tasks.find({
       $or: [
         { private: { $ne: true } },
         { owner: this.userId }
@@ -34,7 +34,7 @@ Meteor.methods({
       throw new Meteor.Error('not-authorized')
     }
 
-    G.Tasks.insert({
+    _g.Collections.Tasks.insert({
       text: text,
       createdAt: new Date(),
       owner: Meteor.userId(),
@@ -43,33 +43,33 @@ Meteor.methods({
   },
 
   removeTask (taskId) {
-    const task = G.Tasks.findOne(taskId)
+    const task = _g.Collections.Tasks.findOne(taskId)
     if (task.private && task.owner !== Meteor.userId()) {
       // If the task is private, make sure only the owner can delete it
       throw new Meteor.Error('not-authorized')
     }
 
-    G.Tasks.remove(taskId)
+    _g.Collections.Tasks.remove(taskId)
   },
 
   setChecked (taskId, setChecked) {
-    const task = G.Tasks.findOne(taskId)
+    const task = _g.Collections.Tasks.findOne(taskId)
     if (task.private && task.owner !== Meteor.userId()) {
       // If the task is private, make sure only the owner can check it off
       throw new Meteor.Error('not-authorized')
     }
 
-    G.Tasks.update(taskId, { $set: { checked: setChecked } })
+    _g.Collections.Tasks.update(taskId, { $set: { checked: setChecked } })
   },
 
   setPrivate (taskId, setToPrivate) {
-    const task = G.Tasks.findOne(taskId)
+    const task = _g.Collections.Tasks.findOne(taskId)
 
     // Make sure only the task owner can make a task private
     if (task.owner !== Meteor.userId()) {
       throw new Meteor.Error('not-authorized')
     }
 
-    G.Tasks.update(taskId, { $set: { private: setToPrivate } })
+    _g.Collections.Tasks.update(taskId, { $set: { private: setToPrivate } })
   }
 })

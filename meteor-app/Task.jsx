@@ -1,5 +1,5 @@
-// G.Task component - represents a single todo item
-G.Task = React.createClass({
+// _g.Components.Task component - represents a single todo item
+_g.Components.Task = React.createClass({
   propTypes: {
     task: React.PropTypes.object.isRequired,
     showPrivateButton: React.PropTypes.bool.isRequired

@@ -1,5 +1,11 @@
+
+var __global = {
+  Components: {},
+  Collections: {}
+}
+
 if (typeof window !== 'undefined') {
-  window.G = {}
+  window._g = __global
 } else {
-  global.G = {}
+  global._g = __global
 }

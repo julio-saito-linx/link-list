@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "cd meteor-app && meteor",
+    "mongo": "cd meteor-app && meteor mongo",
     "test": "standard"
   },
   "author": "",
@@ -14,7 +15,7 @@
   },
   "standard": {
     "globals": [
-      "G",
+      "_g",
       "React",
       "Meteor",
       "Mongo",
