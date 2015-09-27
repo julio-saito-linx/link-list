@@ -6,7 +6,6 @@
 
 react
 accounts-ui
-accounts-password
 standard-minifiers
 meteor-base
 mobile-experience
