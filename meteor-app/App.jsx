@@ -39,18 +39,24 @@ _g.Components.App = React.createClass({
     event.preventDefault()
 
     // Find the text field via the React ref
-    var text = React.findDOMNode(this.refs.textInput).value.trim()
+    var text = React.findDOMNode(this.refs.textArea).value.trim()
 
     Meteor.call('addTask', text)
 
     // Clear form
-    React.findDOMNode(this.refs.textInput).value = ''
+    React.findDOMNode(this.refs.textArea).value = ''
   },
 
   toggleHideCompleted () {
     this.setState({
       hideCompleted: !this.state.hideCompleted
     })
+  },
+
+  handleKeyDown (event) {
+    if (event.ctrlKey && event.keyCode === 13) {
+      this.handleSubmit(event)
+    }
   },
 
   render () {
@@ -72,9 +78,10 @@ _g.Components.App = React.createClass({
 
           { this.data.currentUser
             ? <form className='new-task' onSubmit={this.handleSubmit} >
-                <input
+                <textarea
                   type='text'
-                  ref='textInput'
+                  ref='textArea'
+                  onKeyDown={this.handleKeyDown}
                   placeholder='Type to add new tasks' />
               </form> : ''
           }

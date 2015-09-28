@@ -16,12 +16,14 @@
   "standard": {
     "globals": [
       "_g",
+      "Async",
       "React",
       "Meteor",
       "Mongo",
       "Accounts",
       "Blaze",
       "Template",
+      "hljs",
       "ReactMeteorData"
     ]
   }

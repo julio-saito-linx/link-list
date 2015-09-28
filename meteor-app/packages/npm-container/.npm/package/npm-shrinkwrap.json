@@ -1,0 +1,23 @@
+{
+  "dependencies": {
+    "remarkable": {
+      "version": "1.6.0",
+      "dependencies": {
+        "argparse": {
+          "version": "0.1.16",
+          "dependencies": {
+            "underscore": {
+              "version": "1.7.0"
+            },
+            "underscore.string": {
+              "version": "2.4.0"
+            }
+          }
+        },
+        "autolinker": {
+          "version": "0.15.3"
+        }
+      }
+    }
+  }
+}

@@ -25,6 +25,31 @@ if (Meteor.isServer) {
       ]
     })
   })
+
+  Meteor.methods({
+    renderMarkdown: function renderMarkdown (text) {
+      var Remarkable = Meteor.npmRequire('remarkable')
+
+      // Actual default values
+      var md = new Remarkable({
+        highlight: function (str, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            try {
+              return hljs.highlight(lang, str).value
+            } catch (err) {}
+          }
+
+          try {
+            return hljs.highlightAuto(str).value
+          } catch (err) {}
+
+          return '' // use external default escaping
+        }
+      })
+      var htmlResult = md.render(text)
+      return htmlResult
+    }
+  })
 }
 
 Meteor.methods({
@@ -34,11 +59,21 @@ Meteor.methods({
       throw new Meteor.Error('not-authorized')
     }
 
-    _g.Collections.Tasks.insert({
-      text: text,
-      createdAt: new Date(),
-      owner: Meteor.userId(),
-      username: Meteor.user().username
+    var getFirstName = function (fullName) {
+      var parts = fullName.split(' ')
+      return parts[0]
+    }
+
+    Meteor.call('renderMarkdown', text, (error, result) => {
+      if (error) {
+        throw error
+      }
+      _g.Collections.Tasks.insert({
+        text: result,
+        createdAt: new Date(),
+        owner: Meteor.userId(),
+        username: getFirstName(Meteor.user().profile.name)
+      })
     })
   },
 

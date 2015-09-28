@@ -5,6 +5,12 @@ _g.Components.Task = React.createClass({
     showPrivateButton: React.PropTypes.bool.isRequired
   },
 
+  getInitialState () {
+    return {
+      renderedMarkdown: ''
+    }
+  },
+
   toggleChecked () {
     // Set the checked property to the opposite of its current value
     Meteor.call('setChecked', this.props.task._id, !this.props.task.checked)
@@ -32,6 +38,10 @@ _g.Components.Task = React.createClass({
     return cssList.join(' ')
   },
 
+  componentDidMount () {
+    this.renderMarkDown(this.props.task.text)
+  },
+
   render () {
     // Give tasks a different className when they are checked off,
     // so that we can style them nicely in CSS
@@ -44,7 +54,7 @@ _g.Components.Task = React.createClass({
     return (
       <li className={taskClassName}>
         <button className='delete' onClick={this.deleteThisTask}>
-          &times;
+          x
         </button>
 
         <input
@@ -60,7 +70,8 @@ _g.Components.Task = React.createClass({
         ) : ''}
 
         <span className='text'>
-          <strong>{this.props.task.username}</strong>: {this.props.task.text}
+          <strong>{this.props.task.username}</strong>:
+          <div dangerouslySetInnerHTML={ {__html: this.props.task.text} } />
         </span>
       </li>
     )
